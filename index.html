@@ -6,126 +6,184 @@
     <title>Visualization: Yogic Meditation for OCD</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;700&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Roboto:wght@300;400;500;700&display=swap');
+
+      :root {
+        --primary-text-color: #212121; /* Dark Grey */
+        --secondary-text-color: #555555;
+        --background-color: #f8f9fa; /* Light off-white */
+        --section-background: #ffffff;
+        --border-color: #dee2e6; /* Light grey border */
+        --accent-color: #007bff; /* A subtle accent if needed, though sticking to monochrome */
+        --heading-font: 'Roboto', sans-serif;
+        --body-font: 'Merriweather', serif;
+      }
 
       body {
-        font-family: 'EB Garamond', serif;
-        background-color: #ffffff;
-        color: #000000;
-        line-height: 1.7;
+        font-family: var(--body-font);
+        background-color: var(--background-color);
+        color: var(--primary-text-color);
+        line-height: 1.8;
         margin: 0;
-        padding: 20px;
-        font-size: 16px;
+        padding: 0; /* Remove default padding */
+        font-size: 1rem; /* Base font size for responsiveness */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
 
       .container {
-        max-width: 900px;
+        max-width: 960px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 20px 15px; /* Add horizontal padding for mobile */
       }
 
       h1,
       h2,
       h3,
       h4 {
-        font-family: 'Montserrat', sans-serif;
-        color: #000000;
-        margin-top: 1.5em;
-        margin-bottom: 0.5em;
+        font-family: var(--heading-font);
+        color: var(--primary-text-color);
+        margin-top: 1.8em;
+        margin-bottom: 0.8em;
+        font-weight: 500;
       }
 
       h1 {
-        font-size: 2.2em;
+        font-size: 2.5rem;
         text-align: center;
-        margin-bottom: 0.2em;
+        margin-bottom: 0.3em;
         font-weight: 700;
+        color: #111; /* Darker for main title */
       }
 
       .authors,
       .publication-info {
         text-align: center;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 0.9em;
-        color: #333333;
-        margin-bottom: 2em;
+        font-family: var(--heading-font);
+        font-size: 0.9rem;
+        color: var(--secondary-text-color);
+        margin-bottom: 2.5em;
       }
       .authors {
-        font-size: 1em;
-        margin-bottom: 0.5em;
+        font-size: 1rem;
+        margin-bottom: 0.6em;
       }
 
       section {
-        margin-bottom: 30px;
-        padding: 25px;
-        border: 1px solid #cccccc;
-        border-radius: 0px; /* Sharp edges for a more classic look */
-        background-color: #fdfdfd; /* Very light grey, almost white */
+        margin-bottom: 35px;
+        padding: 30px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        background-color: var(--section-background);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Subtle shadow */
       }
 
       section h2 {
-        font-size: 1.6em;
-        border-bottom: 2px solid #000000;
-        padding-bottom: 10px;
+        font-size: 1.8rem;
+        border-bottom: 2px solid var(--primary-text-color);
+        padding-bottom: 12px;
         margin-top: 0;
-        font-weight: 400;
+        font-weight: 500;
       }
       section h3 {
-        font-size: 1.3em;
-        font-weight: 400;
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: #333;
       }
 
       p,
       li {
-        margin-bottom: 1em;
-        text-align: justify;
+        margin-bottom: 1.2em;
+        text-align: left; /* Justify can be hard on mobile */
       }
 
       ul {
-        padding-left: 20px;
+        padding-left: 25px;
+      }
+      ul li {
+        margin-bottom: 0.6em;
       }
 
       .chart-container {
-        width: 90%;
-        max-width: 600px;
-        margin: 30px auto;
-        padding: 15px;
-        border: 1px solid #e0e0e0;
-        background-color: #ffffff;
+        width: 100%; /* Make chart container responsive */
+        max-width: 700px;
+        margin: 35px auto;
+        padding: 20px;
+        border: 1px solid var(--border-color);
+        background-color: var(--section-background);
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
       }
 
       table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 20px;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 0.9em;
+        margin-top: 25px;
+        font-family: var(--heading-font);
+        font-size: 0.95rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+      }
+
+      .table-responsive-wrapper {
+        overflow-x: auto; /* Allows horizontal scrolling for tables on small screens */
       }
 
       th,
       td {
-        border: 1px solid #000000;
-        padding: 10px;
+        border: 1px solid var(--border-color);
+        padding: 12px 15px;
         text-align: left;
       }
 
       th {
-        background-color: #f0f0f0; /* Light grey for table headers */
-        font-weight: bold;
+        background-color: #e9ecef; /* Lighter grey for table headers */
+        font-weight: 500;
+        color: var(--primary-text-color);
       }
 
       .note {
         font-style: italic;
-        font-size: 0.9em;
-        color: #555555;
+        font-size: 0.9rem;
+        color: var(--secondary-text-color);
         text-align: center;
-        margin-top: 15px;
+        margin-top: 20px;
       }
       .citation {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 0.8em;
+        font-family: var(--heading-font);
+        font-size: 0.85rem;
         text-align: center;
-        margin-top: 40px;
-        color: #666;
+        margin-top: 50px;
+        color: #777;
+      }
+
+      /* Mobile specific adjustments */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2rem;
+        }
+        section h2 {
+          font-size: 1.5rem;
+        }
+        section h3 {
+          font-size: 1.2rem;
+        }
+        body {
+          font-size: 0.95rem;
+          padding: 10px 0;
+        }
+        .container {
+          padding: 15px 10px;
+        }
+        section {
+          padding: 20px;
+        }
+        .chart-container {
+          padding: 10px;
+        }
+        th,
+        td {
+          padding: 8px 10px;
+        }
       }
     </style>
   </head>
@@ -166,21 +224,33 @@
         </section>
 
         <section id="study-design">
-          <h2>Study Design</h2>
+          <h2>Study Design & Participant Flow</h2>
           <p>
-            The trial involved patients diagnosed with OCD according to
-            DSM-III-R criteria. They were randomized and matched for sex, age,
-            and medication status.
+            The trial recruited patients diagnosed with OCD according to
+            DSM-III-R criteria. Initially, 50 adults and 2 adolescents were
+            screened. Of these, 22 adults and 1 adolescent fulfilled initial
+            criteria and were allocated to treatment after pretreatment
+            assessment. Ultimately, 21 adults and 1 adolescent girl (Patient 11,
+            aged 16) actually participated and entered randomization.
           </p>
-          <h3>Interventions:</h3>
+          <p>
+            Participants were then randomized and matched for sex, age, and
+            medication status into two groups for Phase 1:
+          </p>
+          <h3>Interventions (Phase 1 - First 3 Months):</h3>
           <ul>
             <li>
-              <strong>Group 1 (KY):</strong> Practiced a specific Kundalini Yoga
-              meditation protocol.
+              <strong>Group 1 (Kundalini Yoga - KY):</strong> Initially 10
+              adults and 1 adolescent (Patient 11). They practiced a specific
+              Kundalini Yoga meditation protocol.
             </li>
             <li>
-              <strong>Group 2 (RR+MM):</strong> Practiced the Relaxation
-              Response technique combined with Mindfulness Meditation.
+              <strong
+                >Group 2 (Relaxation Response + Mindfulness Meditation -
+                RR+MM):</strong
+              >
+              Initially 11 adults. They practiced the Relaxation Response
+              technique combined with Mindfulness Meditation.
             </li>
           </ul>
           <h3>Assessment Measures:</h3>
@@ -262,7 +332,23 @@
         </section>
 
         <section id="phase1-results">
-          <h2>Phase 1: Initial 3-Month Comparison</h2>
+          <h2>Phase 1: Initial 3-Month Comparison & Attrition</h2>
+          <p>
+            During the first 3-month period, each group experienced attrition.
+            One adult woman in Group 1 (KY) was eliminated due to increasing her
+            benzodiazepine dosage. Additionally, 3 adults dropped out of Group 1
+            (KY), and the adolescent girl (Patient 11) also withdrew from this
+            group. Group 2 (RR+MM) also had 3 adult dropouts.
+          </p>
+          <p>
+            This left
+            <strong
+              >7 adults completing the 3-month therapy in Group 1 (KY)</strong
+            >
+            and <strong>7 adults completing in Group 2 (RR+MM)</strong>. The
+            mean baseline Y-BOCS scores for these completers were not
+            significantly different between groups (KY: 28.7; RR+MM: 26.1).
+          </p>
           <p>
             After the first 3 months of therapy, the Kundalini Yoga (KY) group
             demonstrated significantly greater improvements compared to the
@@ -270,32 +356,53 @@
             primary outcome measure, the Y-BOCS, as well as other scales.
           </p>
 
-          <h3>Y-BOCS Percentage Improvement at 3 Months</h3>
+          <h3>
+            Y-BOCS Percentage Improvement at 3 Months (Completers, N=7 per
+            group)
+          </h3>
           <div class="chart-container">
             <canvas id="phase1YBOCSChart"></canvas>
           </div>
           <p class="note">
-            The KY group showed a 45.8% improvement (P<.001), while the RR+MM
-            group showed a 12.6% improvement (P=.17, not statistically
-            significant). Lower scores on Y-BOCS indicate improvement.
+            The KY group (N=7) showed a 45.8% improvement (mean Y-BOCS change
+            from 28.7 to 15.6; P<.001), while the RR+MM group (N=7) showed a
+            12.6% improvement (mean Y-BOCS change from 26.1 to 22.8; P=.17, not
+            statistically significant). Lower scores on Y-BOCS indicate
+            improvement.
           </p>
 
           <p>
-            Within-group analysis showed that Group 1 (KY) significantly
-            improved on all six assessment scales, whereas Group 2 (RR+MM)
-            showed no significant improvements on any scale during this initial
-            3-month period.
+            Within-group analysis for these completers showed that Group 1 (KY)
+            significantly improved on all six assessment scales (Y-BOCS,
+            SCL-90-R OC, SCL-90-R GSI, POMS, PSS, PIL; P < .01 to P < .001),
+            whereas Group 2 (RR+MM) showed no significant improvements on any
+            scale during this initial 3-month period.
           </p>
         </section>
 
         <section id="phase2-results">
-          <h2>Phase 2: Long-Term Effects of Kundalini Yoga (Merged Group)</h2>
+          <h2>
+            Phase 2: Long-Term Effects of Kundalini Yoga (Merged Group) &
+            Attrition
+          </h2>
           <p>
             Based on the superior results of the KY protocol in Phase 1, the
-            groups were merged. All participating patients then continued with
-            or switched to the Kundalini Yoga techniques for an additional 12
-            months, totaling 15 months of KY therapy for the original KY group
-            and 12 months for those who switched.
+            groups were merged. The 7 completers from Group 2 (RR+MM) switched
+            to the KY protocol. One adult woman from Group 1 who had previously
+            withdrawn (Patient 8) chose to re-enter. Additionally, three new
+            candidates (2 women, 1 adolescent boy with Tourette Syndrome) who
+            couldn't participate earlier joined, starting the KY protocol. Thus,
+            <strong>18 patients started Phase 2</strong> using the KY protocol.
+          </p>
+          <p>
+            During Phase 2 (months 3 to 15), there was further attrition. Three
+            patients (Patients 1, 10, and 17) withdrew after several weeks into
+            Phase 2. The paper presents long-term data for participants who
+            completed tests for at least two 3-month intervals.
+            <strong
+              >Ultimately, 11 patients completed the full 15 months of the
+              study.</strong
+            >
           </p>
 
           <h3>Y-BOCS Mean Scores Over Time (Kundalini Yoga Protocol)</h3>
@@ -304,53 +411,57 @@
           </div>
           <p class="note">
             This chart shows the mean Y-BOCS scores for participants undergoing
-            the KY protocol at various time points. Data reflects all subjects
-            completing tests for at least two intervals (N varies per time point
-            as per Table 4 of the paper). A consistent downward trend indicates
-            sustained improvement in OCD symptoms.
+            the KY protocol at various time points. Data reflects subjects
+            completing tests for at least two intervals (N=14 at 3M, N=14 at 6M,
+            N=13 at 9M, N=12 at 12M, N=11 at 15M, as per Table 4 of the paper).
+            A consistent downward trend indicates sustained improvement in OCD
+            symptoms.
           </p>
 
-          <h3>Overall Improvement at 15 Months (Kundalini Yoga)</h3>
+          <h3>Overall Improvement at 15 Months (Completers, N=11)</h3>
           <p>
-            For the final group of 11 patients who completed 15 months of the
-            study (using KY protocol), significant improvements were observed
-            across all psychological scales compared to their initial baselines
-            (P < .0001; ANOVA):
+            For the final group of <strong>11 patients</strong> who completed 15
+            months of the study (all having used the KY protocol for at least 12
+            months), significant improvements were observed across all
+            psychological scales compared to their initial baselines (P < .0001;
+            ANOVA):
           </p>
-          <table>
-            <thead>
-              <tr>
-                <th>Psychological Scale</th>
-                <th>Percentage Improvement at 15 Months</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Yale-Brown Obsessive Compulsive Scale (Y-BOCS)</td>
-                <td>53%</td>
-              </tr>
-              <tr>
-                <td>SCL-90-R Obsessive Compulsive (SCL-90-R OC)</td>
-                <td>64%</td>
-              </tr>
-              <tr>
-                <td>SCL-90-R Global Severity Index (SCL-90-R GSI)</td>
-                <td>50%</td>
-              </tr>
-              <tr>
-                <td>Profile of Moods Scale (POMS)</td>
-                <td>69%</td>
-              </tr>
-              <tr>
-                <td>Perceived Stress Scale (PSS)</td>
-                <td>36%</td>
-              </tr>
-              <tr>
-                <td>Purpose in Life (PIL) Test</td>
-                <td>16% (Increase, indicating improvement)</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-responsive-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Psychological Scale</th>
+                  <th>Percentage Improvement at 15 Months</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Yale-Brown Obsessive Compulsive Scale (Y-BOCS)</td>
+                  <td>53%</td>
+                </tr>
+                <tr>
+                  <td>SCL-90-R Obsessive Compulsive (SCL-90-R OC)</td>
+                  <td>64%</td>
+                </tr>
+                <tr>
+                  <td>SCL-90-R Global Severity Index (SCL-90-R GSI)</td>
+                  <td>50%</td>
+                </tr>
+                <tr>
+                  <td>Profile of Moods Scale (POMS)</td>
+                  <td>69%</td>
+                </tr>
+                <tr>
+                  <td>Perceived Stress Scale (PSS)</td>
+                  <td>36%</td>
+                </tr>
+                <tr>
+                  <td>Purpose in Life (PIL) Test</td>
+                  <td>16% (Increase, indicating improvement)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <section id="comparison-other-treatments">
@@ -448,19 +559,18 @@
         <section id="medication-reduction">
           <h2>Medication Reduction</h2>
           <p>
-            An important finding was the impact on medication usage. Of the
-            patients who entered the protocol while taking medication for OCD
-            and completed the study, a notable portion experienced positive
-            changes:
+            An important finding was the impact on medication usage. Of the 12
+            patients who entered the protocol while taking medication for OCD, 6
+            completed the full 15-month study. Among these 6 completers:
           </p>
           <ul>
             <li>
-              Three out of six such patients became free of medication for a
-              minimum of 3 months prior to the study's end.
+              <strong>Three patients (50%)</strong> became free of medication
+              for a minimum of 3 months prior to the study's end.
             </li>
             <li>
-              The remaining patients in this subgroup were able to reduce their
-              medication dosage.
+              The other three patients in this subgroup were able to reduce
+              their medication dosage.
             </li>
           </ul>
         </section>
@@ -521,27 +631,32 @@
               title: {
                 display: true,
                 text: 'Percentage Improvement (%)',
-                font: { family: 'Montserrat', size: 12 },
+                font: { family: 'var(--heading-font)', size: 12 },
               },
               ticks: {
-                font: { family: 'Montserrat', size: 10 },
+                font: { family: 'var(--heading-font)', size: 10 },
+                color: 'var(--secondary-text-color)',
               },
+              grid: { color: 'rgba(0,0,0,0.05)' },
             },
             x: {
               ticks: {
-                font: { family: 'Montserrat', size: 10 },
+                font: { family: 'var(--heading-font)', size: 10 },
+                color: 'var(--secondary-text-color)',
               },
+              grid: { display: false },
             },
           },
           plugins: {
             legend: {
-              display: false, // Or true if preferred, but title is descriptive
+              display: false,
             },
             title: {
               display: true,
               text: 'Y-BOCS % Improvement: KY vs. RR+MM (3 Months)',
-              font: { family: 'Montserrat', size: 14, weight: 'bold' },
-              padding: { top: 10, bottom: 20 },
+              font: { family: 'var(--heading-font)', size: 16, weight: '500' },
+              color: 'var(--primary-text-color)',
+              padding: { top: 10, bottom: 25 },
             },
           },
         },
@@ -565,53 +680,69 @@
           datasets: [
             {
               label: 'Mean Y-BOCS Score (KY Protocol)',
-              data: [29.6, 19.4, 17.8, 15.8, 14.8, 13.1],
-              borderColor: '#000000',
-              backgroundColor: 'rgba(0, 0, 0, 0.1)', // Slight fill, almost transparent
-              tension: 0.1,
-              fill: false, // No fill under the line for a cleaner look
+              data: [29.6, 19.4, 17.8, 15.8, 14.8, 13.1], // N values: Baseline(varies), 3M(14), 6M(14), 9M(13), 12M(12), 15M(11)
+              borderColor: 'var(--primary-text-color)',
+              backgroundColor: 'rgba(33, 33, 33, 0.05)',
+              tension: 0.2, // Smoother line
+              fill: false,
+              pointBackgroundColor: 'var(--primary-text-color)',
+              pointBorderColor: 'var(--section-background)',
+              pointHoverBackgroundColor: 'var(--section-background)',
+              pointHoverBorderColor: 'var(--primary-text-color)',
+              pointRadius: 4,
+              pointHoverRadius: 6,
             },
           ],
         },
         options: {
           responsive: true,
-          maintainAspectRatio: true,
+          maintainAspectRatio: false /* Allow chart to fill container height better */,
           scales: {
             y: {
-              beginAtZero: false, // Scores don't typically start at 0
+              beginAtZero: false,
               title: {
                 display: true,
                 text: 'Mean Y-BOCS Score',
-                font: { family: 'Montserrat', size: 12 },
+                font: { family: 'var(--heading-font)', size: 12 },
+                color: 'var(--primary-text-color)',
               },
               ticks: {
-                font: { family: 'Montserrat', size: 10 },
+                font: { family: 'var(--heading-font)', size: 10 },
+                color: 'var(--secondary-text-color)',
               },
+              grid: { color: 'rgba(0,0,0,0.05)' },
             },
             x: {
               title: {
                 display: true,
                 text: 'Time (Months)',
-                font: { family: 'Montserrat', size: 12 },
+                font: { family: 'var(--heading-font)', size: 12 },
+                color: 'var(--primary-text-color)',
               },
               ticks: {
-                font: { family: 'Montserrat', size: 10 },
+                font: { family: 'var(--heading-font)', size: 10 },
+                color: 'var(--secondary-text-color)',
               },
+              grid: { display: false },
             },
           },
           plugins: {
             legend: {
               display: true,
-              position: 'top',
+              position: 'bottom',
               labels: {
-                font: { family: 'Montserrat', size: 12 },
+                font: { family: 'var(--heading-font)', size: 12 },
+                color: 'var(--primary-text-color)',
+                boxWidth: 15,
+                padding: 20,
               },
             },
             title: {
               display: true,
               text: 'Trend of Y-BOCS Scores with Kundalini Yoga',
-              font: { family: 'Montserrat', size: 14, weight: 'bold' },
-              padding: { top: 10, bottom: 20 },
+              font: { family: 'var(--heading-font)', size: 16, weight: '500' },
+              color: 'var(--primary-text-color)',
+              padding: { top: 10, bottom: 25 },
             },
           },
         },
